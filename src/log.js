@@ -13,4 +13,6 @@ const transport = pino.transport({
 });
 const logger = pino(transport);
 
-module.exports = logger;
+module.exports = {
+    log: logger,
+}
