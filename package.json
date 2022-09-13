@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "eslint": "^8.23.1",
-    "pino-dev": "^3.0.0"
+    "pino-dev": "^3.0.0",
+    "sequelize-cli": "^6.4.1"
   }
 }
