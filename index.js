@@ -4,13 +4,17 @@ const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./src/env.js');
 const { log } = require('./src/log.js');
+const { tags } = require('./src/db.js');
+const { db } = require('./src/db.js');
+const { exit } = require('node:process');
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-	log.info('What');
+	log.info(`Logged in as ${client.user.tag}`);
+	tags.sync({ force: true});
 });
 
 client.commands = new Collection();
@@ -26,9 +30,11 @@ for (const file of commandFiles) {
 }
 
 client.on('interactionCreate', async interaction => {
+	log.info(`${interaction.user.tag} in #${interaction.channel.name} triggered`);
 	if (!interaction.isChatInputCommand()) return;
 
 	const command = interaction.client.commands.get(interaction.commandName);
+	
 
 	if (!command) return;
 
@@ -41,5 +47,20 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
+
+
+const conn = () => {
+	return async () => {
+		try {
+			await db.authenticate();
+			log.info("Connected to db");
+		} catch (error) {
+			log.error('Unable to connect to the database: ', error);
+			exit(-1);
+		}
+	}
+}
+
+conn();
 // Login to Discord with your client's token
 client.login(token);
