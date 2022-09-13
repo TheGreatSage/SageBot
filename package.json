@@ -1,0 +1,21 @@
+{
+  "name": "discbot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "discord bot",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node . | pino-dev"
+  },
+  "author": "Sage",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.2",
+    "pino": "^8.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1",
+    "pino-dev": "^3.0.0"
+  }
+}
