@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { knex } = require('../db/db');
 const { log } = require('../log');
+const { UNIQUE_VIOLATION } = require('pg-error-constants');
 
 // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
 async function addTag(int) {
@@ -33,10 +34,10 @@ async function addTag(int) {
         // log.info('Adding tag');
         return int.reply(`Tag ${tagName} added`);
     } catch (err) {
-        if (err.name == 'SequelizeUniqueConstraintError') {
+        if (err.code === UNIQUE_VIOLATION) {
             return int.reply('That tag already exists');
         }
-        log.error(err);
+        log.error(err.code);
         return int.reply('Something went wrong adding the tag.');
     }
 }
