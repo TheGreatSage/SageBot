@@ -6,7 +6,7 @@ module.exports = {
         .setName('ping')
         .setDescription('Replies with Pong!'),
     async execute(int) {
-        log.trace("Ponged");
+        log.trace('Ponged');
         await int.reply('Pong!');
-    },     
-}
+    },
+};

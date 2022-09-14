@@ -29,3 +29,4 @@ pino-dev.config.json
 *.njsproj
 *.sln
 *.sw?
+.eslintrc.old.json

@@ -20,5 +20,5 @@ module.exports = {
     dbPass_dev: process.env.DB_DEV_PASS,
     dbData_dev: process.env.DB_DEV_DATABASE,
     dbDial_dev: process.env.DB_DEV_DIALECT,
-    dbPort_dev: process.env.DB_DEV_PORT
-}
+    dbPort_dev: process.env.DB_DEV_PORT,
+};
