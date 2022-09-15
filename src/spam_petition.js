@@ -10,7 +10,9 @@ async function spam(client, channel, guildID) {
             log.info('No petition in this guild');
             return;
         }
-        let text = r1.rows[0].text;
+        const usID = r1.rows[0].send_to.toString();
+        let text = `<@${usID}>`;
+        text = text.concat('\n', r1.rows[0].text);
         text = text.replaceAll('\\n', '\n');
         text = text.concat('\n\nSigned,');
         sql = await query('sign_guild', 'select');
@@ -27,7 +29,7 @@ async function spam(client, channel, guildID) {
         text = text.concat('\n\n(MANY MORE COMING)');
         channel.send(text);
         try {
-            const user = await client.users.fetch(r1.rows[0].send_to.toString());
+            const user = await client.users.fetch(usID);
             user.send(text);
         } catch (err2) {
             log.error(`spam send_to: ${err2}`);
