@@ -3,13 +3,13 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-const db = require('./config/db.js');
+const { knexDev, knexPro, knexTest } = require('./src/db/knexconfig.js');
 module.exports = {
 
-    development: db.development,
+    development: knexDev,
 
-    staging: db.test,
+    staging: knexTest,
 
-    production: db.production,
+    production: knexPro,
 
 };

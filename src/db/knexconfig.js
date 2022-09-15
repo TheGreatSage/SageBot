@@ -1,5 +1,28 @@
 const env = require('../env.js');
 
+const dbTimeout = 10000;
+
+const poolConfig = {
+    min: 0,
+    max: 10,
+    afterCreate: function(conn, done) {
+        const sql = 'SET search_path TO discbot;';
+        conn.query(sql, function(err) {
+            done(err, conn);
+        });
+    },
+};
+
+const migrateConfig = {
+    schemaName: 'public',
+    tableName: 'knex_migrations',
+    directory: './db/migrations',
+};
+
+const seedConfig = {
+    directory: './db/seeds',
+};
+
 const dbConfig = {
     production: {
         client: env.dbDial,
@@ -10,18 +33,10 @@ const dbConfig = {
             port: env.dbPort,
             host: env.dbHost,
         },
-        pool: {
-            min: 2,
-            max: 10,
-        },
-        migrations: {
-            schemaName: 'public',
-            tableName: 'knex_migrations',
-            directory: './db/migrations',
-        },
-        seeds: {
-            directory: './db/seeds',
-        },
+        pool: poolConfig,
+        migrations: migrateConfig,
+        seeds: seedConfig,
+        acquireConnectionTimeout: dbTimeout,
     },
     test: {
         client: env.dbDial_test,
@@ -32,18 +47,10 @@ const dbConfig = {
             port: env.dbPort_test,
             host: env.dbHost_test,
         },
-        pool: {
-            min: 2,
-            max: 10,
-        },
-        migrations: {
-            schemaName: 'public',
-            tableName: 'knex_migrations',
-            directory: './db/migrations',
-        },
-        seeds: {
-            directory: './db/seeds',
-        },
+        pool: poolConfig,
+        migrations: migrateConfig,
+        seeds: seedConfig,
+        acquireConnectionTimeout: dbTimeout,
     },
     development: {
         client: env.dbDial_dev,
@@ -54,23 +61,17 @@ const dbConfig = {
             port: env.dbPort_dev,
             host: env.dbHost_dev,
         },
-        pool: {
-            min: 0,
-            max: 10,
-        },
-        migrations: {
-            schemaName: 'public',
-            tableName: 'knex_migrations',
-            directory: './db/migrations',
-        },
-        seeds: {
-            directory: './db/seeds',
-        },
-        acquireConnectionTimeout: 10000,
+        pool: poolConfig,
+        migrations: migrateConfig,
+        seeds: seedConfig,
+        acquireConnectionTimeout: dbTimeout,
     },
 };
 const knexConfig = dbConfig[process.env.NODE_ENV || 'development'];
 
 module.exports = {
     knexConfig: knexConfig,
+    knexDev: dbConfig['development'],
+    knexPro: dbConfig['production'],
+    knexTest: dbConfig['test'],
 };

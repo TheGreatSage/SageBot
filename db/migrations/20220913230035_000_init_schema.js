@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 
-const { runfile } = require('../../src/sql');
+const { runfile } = require('../../src/db/sql');
 
 
 exports.up = function(knex) {
