@@ -8,12 +8,10 @@ const { query } = require('../db/sql');
 async function addTag(int) {
     const tagName = int.options.getString('name');
     const tagDescription = int.options.getString('description');
-
     try {
-        const sqlfile = await query('tags', 'insert');
-        await knex.raw(sqlfile,
+        const sql = await query('tags', 'insert');
+        await knex.raw(sql,
             [tagName, tagDescription, int.user.username]);
-
         return int.reply(`Tag ${tagName} added`);
     } catch (err) {
         if (err.code === UNIQUE_VIOLATION) {
