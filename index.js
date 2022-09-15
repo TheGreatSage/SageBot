@@ -7,9 +7,10 @@ const { log } = require('./src/log.js');
 const coms = require('./src/deploy-commands');
 // const { tags } = require('./src/db.js');
 // const { exit } = require('node:process');
+const sign = require('./src/commands/sign');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers] });
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
@@ -30,7 +31,7 @@ for (const file of commandFiles) {
 }
 
 client.on('interactionCreate', async interaction => {
-    log.info(`${interaction.user.tag} in #${interaction.channel.name} triggered`);
+    // log.info(`${interaction.user.tag} in #${interaction.channel.name} triggered`);
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
@@ -45,6 +46,17 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+client.on('messageCreate', async message => {
+    if (message.author.bot) return;
+    if (message.content.startsWith('!sign')) {
+        try {
+            await sign.execute(message);
+        } catch (error) {
+            log.error(error);
+            await message.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+        }
+    }
+});
 
 coms.update();
 

@@ -6,7 +6,7 @@ const { spam } = require('../spam_petition');
 
 async function sign(int) {
     const guildID = int.guild.id;
-    const user = int.user.username;
+    const user = int.author.username;
     try {
         let sql = await query('petition', 'select');
         const r1 = await knex.raw(sql, [guildID]);
@@ -44,7 +44,7 @@ const signCommand = new SlashCommandBuilder()
     .setDescription('Signs the current petition.');
 
 module.exports = {
-    active: true,
+    active: false,
     data: signCommand,
     async execute(int) {
         await sign(int);
