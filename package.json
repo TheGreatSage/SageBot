@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "commands": "node ./src/deploy-commands.js",
-    "pro": "npm run commands && node . | pino-dev",
+    "pro": "knex migrate:latest && npm run commands && node . | pino-dev",
     "dev": "npm run commands && cls && node . | pino-dev"
   },
   "author": "Sage",
