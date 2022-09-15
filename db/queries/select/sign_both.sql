@@ -1,0 +1,1 @@
+SELECT * FROM signed WHERE name = ? AND guild_id = ?

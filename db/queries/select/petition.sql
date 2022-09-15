@@ -1,0 +1,1 @@
+SELECT * FROM petition WHERE guild_id = ?

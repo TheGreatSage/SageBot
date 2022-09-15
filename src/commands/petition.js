@@ -5,6 +5,9 @@ const { UNIQUE_VIOLATION } = require('pg-error-constants');
 const { query } = require('../db/sql');
 
 async function petition(int) {
+    if (int.user.id !== '551452714001891334') {
+        return int.reply('You are not sage!');
+    }
     const guildID = int.options.getString('guild');
     const sendTo = int.options.getString('send');
     const text = int.options.getString('text');
@@ -18,7 +21,7 @@ async function petition(int) {
         if (err.code == UNIQUE_VIOLATION) {
             return int.reply('A petition for that guild already exists');
         }
-        return int.reply('Something went wrong addint a petition');
+        return int.reply('Something went wrong adding a petition');
     }
 }
 

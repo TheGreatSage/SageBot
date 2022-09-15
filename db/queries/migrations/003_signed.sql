@@ -1,0 +1,6 @@
+CREATE TABLE signed(
+    id SERIAL PRIMARY KEY,
+    guild_id VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    signed INT NOT NULL DEFAULT 0
+);
