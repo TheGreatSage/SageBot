@@ -3,9 +3,10 @@ const { knex } = require('../db/db');
 const { log } = require('../log');
 const { UNIQUE_VIOLATION } = require('pg-error-constants');
 const { query } = require('../db/sql');
+const env = require('../env');
 
 async function petition(int) {
-    if (int.user.id !== '551452714001891334') {
+    if (int.user.id !== env.adminId) {
         return int.reply('You are not sage!');
     }
     const guildID = int.options.getString('guild');

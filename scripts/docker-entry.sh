@@ -8,7 +8,6 @@ then
 fi
 
 echo "NODE_ENV=production"  >> $ENV
-echo "TOKEN=$DISCORD_TOKEN" >> $ENV
 
 echo "[entry] Running run"
 exec "$@"

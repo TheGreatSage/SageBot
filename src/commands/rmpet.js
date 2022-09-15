@@ -1,9 +1,10 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { knex } = require('../db/db');
+const { adminId } = require('../env');
 const { log } = require('../log');
 
 async function rmPetition(int) {
-    if (int.user.id !== '551452714001891334') {
+    if (int.user.id !== adminId) {
         return int.reply('You are not sage!');
     }
     const guildID = int.options.getString('guild');

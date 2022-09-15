@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   discbot:
-    build: ./discbot
+    build: ./
     restart: always
     container_name: discbot
     environment:

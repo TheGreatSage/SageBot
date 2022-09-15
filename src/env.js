@@ -3,6 +3,7 @@ module.exports = {
     token: process.env.TOKEN,
     guildId: process.env.GUILD_ID,
     clientId: process.env.CLIENT_ID,
+    adminId: process.env.ADMIN_ID,
     dbUser: process.env.DB_USER,
     dbHost: process.env.DB_HOST,
     dbPass: process.env.DB_PASS,
