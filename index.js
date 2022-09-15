@@ -4,6 +4,7 @@ const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./src/env.js');
 const { log } = require('./src/log.js');
+const coms = require('./src/deploy-commands');
 // const { tags } = require('./src/db.js');
 // const { exit } = require('node:process');
 
@@ -45,18 +46,6 @@ client.on('interactionCreate', async interaction => {
 });
 
 
-// const conn = () => {
-//     return async () => {
-//         try {
-//             // await db.authenticate();
-//             log.info('Connected to db');
-//         } catch (error) {
-//             log.error('Unable to connect to the database: ', error);
-//             exit(-1);
-//         }
-//     };
-// };
+coms.update();
 
-// conn();
-// Login to Discord with your client's token
 client.login(token);

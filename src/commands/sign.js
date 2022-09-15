@@ -44,6 +44,7 @@ const signCommand = new SlashCommandBuilder()
     .setDescription('Signs the current petition.');
 
 module.exports = {
+    active: true,
     data: signCommand,
     async execute(int) {
         await sign(int);

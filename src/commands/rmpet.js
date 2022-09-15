@@ -31,6 +31,7 @@ const rmPet = new SlashCommandBuilder()
 
 
 module.exports = {
+    active: true,
     data: rmPet,
     async execute(int) {
         await rmPetition(int);

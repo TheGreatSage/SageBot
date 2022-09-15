@@ -23,6 +23,7 @@ async function addTag(int) {
 }
 
 module.exports = {
+    active: false,
     data: new SlashCommandBuilder()
         .setName('addtag')
         .setDescription('Adds a tag!')

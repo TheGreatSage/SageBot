@@ -42,6 +42,7 @@ const petCommand = new SlashCommandBuilder()
             .setRequired(true));
 
 module.exports = {
+    active: true,
     data: petCommand,
     async execute(int) {
         await petition(int);
