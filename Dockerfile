@@ -10,4 +10,4 @@ RUN npm install
 COPY . .
 
 ENTRYPOINT ["./scripts/docker-entry.sh"]
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "pro"]

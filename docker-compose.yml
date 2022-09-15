@@ -1,15 +1,15 @@
 version: '3.8'
 services:
-  disbot:
-    build: http://localhost:3000/sage/discbot.git
-  restart: always
-  container_name: disbot
-  environment:
-    - DISCORD_TOKEN=${DISCORD_TOKEN}
-    - CLIENT_ID=${CLIENT_ID}
-    - GUILD_ID=${GUILD_ID}
-    - DB_USER=${DB_USER}
-    - DB_PASS=${DB_PASS}
-    - DB_PORT=${DB_PORT}
-    - DB_DIALECT=postgres
-    - DB_DATABASE=${DB_DATABASE}
+  discbot:
+    build: ./discbot
+    restart: always
+    container_name: discbot
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - CLIENT_ID=${CLIENT_ID}
+      - GUILD_ID=${GUILD_ID}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_PORT=${DB_PORT}
+      - DB_DIALECT=postgres
+      - DB_DATABASE=${DB_DATABASE}
