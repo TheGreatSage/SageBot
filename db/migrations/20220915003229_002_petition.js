@@ -2,12 +2,9 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-
 const { runfile } = require('../../src/db/sql');
-
-
 exports.up = function(knex) {
-    return runfile(knex, '000_init_schema.sql', 'migrations');
+    return runfile(knex, '002_petition.sql', 'migrations');
 };
 
 /**
@@ -16,5 +13,5 @@ exports.up = function(knex) {
  */
 exports.down = function(knex) {
     return knex.schema
-        .dropSchemaIfExists('discbot');
+        .dropTableIfExists('petition');
 };

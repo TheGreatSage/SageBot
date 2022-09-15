@@ -4,7 +4,7 @@
  */
 const { runfile } = require('../../src/db/sql');
 exports.up = function(knex) {
-    return runfile(knex, '001_tags.sql');
+    return runfile(knex, '001_tags.sql', 'migrations');
 };
 
 /**

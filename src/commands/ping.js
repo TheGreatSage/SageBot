@@ -7,6 +7,7 @@ module.exports = {
         .setDescription('Replies with Pong!'),
     async execute(int) {
         log.trace('Ponged');
+        log.info(typeof int.guild.id);
         await int.reply('Pong!');
     },
 };
