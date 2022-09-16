@@ -1,11 +1,11 @@
-const { knex } = require('./db/db');
+const { select } = require('./db/db');
 const { log } = require('./log');
 const { query } = require('./db/sql');
 
 async function spam(client, channel, guildID) {
     try {
         let sql = await query('petition', 'select');
-        const r1 = await knex.raw(sql, [guildID]);
+        const r1 = await select(sql, [guildID]);
         if (r1.rowCount === 0) {
             log.info('No petition in this guild');
             return;
@@ -16,7 +16,7 @@ async function spam(client, channel, guildID) {
         text = text.replaceAll('\\n', '\n');
         text = text.concat('\n\nSigned,');
         sql = await query('sign_guild', 'select');
-        const signs = await knex.raw(sql, [guildID]);
+        const signs = await select(sql, [guildID]);
         if (signs.rowCount !== 0) {
             for (let i = 0; i < signs.rowCount; i++) {
                 text = text.concat('\n\n', signs.rows[i].name.toString());

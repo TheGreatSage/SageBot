@@ -1,6 +1,8 @@
 # Sages Discort Bot
 A simple discord bot made with [discordjs](https://github.com/discordjs/discord.js) and [knexjs](https://knexjs.org/) and [postgres](https://www.postgresql.org/)
 
+Has partial support for [better-sqlite3](https://www.npmjs.com/package/better-sqlite3) that I will try and keep working. Though I mainly do all testing against postgres. But I'm keeping better-sqlite3 for an option for a quick setup as it doesn't require anything extra.
+
 This has several breaking bugs that don't matter enough for me to worry about fixing, like the bot getting killed when trying to send a dm to a user that it can't.
 
 Will slowly work on. The github page for this will only recieve semi-feture complete updates. As most development is done on a private gitea repository.
@@ -46,12 +48,32 @@ To remove a petition for a guild.
 
 ## Setup
 
+### Discord Bot
+Not sure what permissions exactly this bot needs for the petitions but 277025602624 seems to work well.
+
 ### Database
-Must have a postgres database setup. This uses dotenv to for changing things like the bot token. Check .env.example for all the settings used. 
-
-Currently this does run using an internal schema when conntecting to the database, and I havn't tested if that breaks things like mysql or sqlite. This could easily run with sqlite I think I just wanted to get setup with something a little more robust.
-
+The `.env` file should contain all settings for database connection. See `.env.example`.
 The default it runs in is development. You can switch it by adding in something like `NODE_ENV=production`
+
+The quick setup would be to use better-sqlite3:
+```
+## Production / Development / Testing
+## DB_        / DB_DEV_     / DB_TEST_
+DB_DIALECT=better-sqlite3
+DB_FILE=./db/disbot.db
+```
+
+The recommended usage is to setup a postgres database and connect to it:
+```
+## Production / Development / Testing
+## DB_ / DB_DEV_ / DB_TEST_
+DB_USER=disbot
+DB_HOST=localhost
+DB_PASS=
+DB_DATABASE=disbot
+DB_PORT=5432
+DB_DIALECT=postgres
+```
 
 ### Node + Schema
 

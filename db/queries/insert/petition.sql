@@ -1,1 +1,1 @@
-INSERT INTO petition(guild_id, send_to, text, creator) VALUES (?, ?, ?, ?)
+INSERT INTO petition(guild_id, send_to, text, creator, signed) VALUES (?, ?, ?, ?, 0)

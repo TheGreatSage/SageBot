@@ -4,10 +4,14 @@
  */
 
 const { runfile } = require('../../src/db/sql');
-
+const { knexConfig } = require('../../src/db/knexconfig');
 
 exports.up = function(knex) {
-    return runfile(knex, '000_init_schema.sql', 'migrations');
+    if (knexConfig.client === 'postgres') {
+        return runfile(knex, '000_init_schema.sql', 'migrations');
+    } else {
+        return Promise.resolve();
+    }
 };
 
 /**
@@ -15,6 +19,10 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-    return knex.schema
-        .dropSchemaIfExists('discbot');
+    if (knexConfig.client === 'postgres') {
+        return knex.schema
+            .dropSchemaIfExists('discbot');
+    } else {
+        return Promise.resolve();
+    }
 };

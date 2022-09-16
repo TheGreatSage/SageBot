@@ -13,65 +13,46 @@ const poolConfig = {
     },
 };
 
-const migrateConfig = {
-    schemaName: 'public',
-    tableName: 'knex_migrations',
-    directory: './db/migrations',
-};
-
 const seedConfig = {
     directory: './db/seeds',
 };
 
-const dbConfig = {
-    production: {
-        client: env.dbDial,
+const knexC = (config) => {
+    const envC = env.dbConf[config];
+
+    const migrateConfig = {
+        tableName: 'knex_migrations',
+        directory: './db/migrations',
+    };
+
+    const dbC = {
+        client: envC['dialect'],
         connection: {
-            user: env.dbUser,
-            database: env.dbData,
-            password: env.dbPass,
-            port: env.dbPort,
-            host: env.dbHost,
+            user: envC['user'],
+            database: envC['data'],
+            password: envC['pass'],
+            port: envC['port'],
+            host: envC['host'],
+            filename: envC['file'],
         },
-        pool: poolConfig,
+        acquireConnectionTimeout: dbTimeout,
         migrations: migrateConfig,
         seeds: seedConfig,
-        acquireConnectionTimeout: dbTimeout,
-    },
-    test: {
-        client: env.dbDial_test,
-        connection: {
-            user: env.dbUser_test,
-            database: env.dbData_test,
-            password: env.dbPass_test,
-            port: env.dbPort_test,
-            host: env.dbHost_test,
-        },
-        pool: poolConfig,
-        migrations: migrateConfig,
-        seeds: seedConfig,
-        acquireConnectionTimeout: dbTimeout,
-    },
-    development: {
-        client: env.dbDial_dev,
-        connection: {
-            user: env.dbUser_dev,
-            database: env.dbData_dev,
-            password: env.dbPass_dev,
-            port: env.dbPort_dev,
-            host: env.dbHost_dev,
-        },
-        pool: poolConfig,
-        migrations: migrateConfig,
-        seeds: seedConfig,
-        acquireConnectionTimeout: dbTimeout,
-    },
+    };
+    if (dbC.client === 'postgres') {
+        dbC.migrations['schemaName'] = 'public';
+        dbC['pool'] = poolConfig;
+    } else if (dbC.client === 'sqlite3' || dbC.client === 'better-sqlite3') {
+        dbC['useNullAsDefault'] = true;
+    }
+
+    const r = dbC;
+    return r;
 };
-const knexConfig = dbConfig[process.env.NODE_ENV || 'development'];
+
+const current = process.env.NODE_ENV || 'development';
 
 module.exports = {
-    knexConfig: knexConfig,
-    knexDev: dbConfig['development'],
-    knexPro: dbConfig['production'],
-    knexTest: dbConfig['test'],
+    knexConfig: knexC(current),
+    getConfig: knexC,
 };

@@ -1,1 +1,1 @@
-INSERT INTO tags(name,description,username) VALUES (?, ?, ?)
+INSERT INTO tags(name, description, username, usage_count) VALUES (?, ?, ?, 0)

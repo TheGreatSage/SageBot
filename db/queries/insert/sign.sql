@@ -1,1 +1,1 @@
-INSERT INTO signed(guild_id, name) VALUES (?, ?)
+INSERT INTO signed(guild_id, name, signed) VALUES (?, ?, 0)

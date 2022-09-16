@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { knex } = require('../db/db');
+const { knex, select } = require('../db/db');
 const { log } = require('../log');
 const { query } = require('../db/sql');
 const { spam } = require('../spam_petition');
@@ -9,12 +9,12 @@ async function sign(int) {
     const user = int.author.username;
     try {
         let sql = await query('petition', 'select');
-        const r1 = await knex.raw(sql, [guildID]);
+        const r1 = await select(sql, [guildID]);
         if (r1.rowCount === 0) {
             return int.reply('There is no petition for this server');
         }
         sql = await query('sign_both', 'select');
-        const result = await knex.raw(sql, [user, guildID]);
+        const result = await select(sql, [user, guildID]);
         // log.info(result.rowCount.toString());
         if (result.rowCount > 0) {
             await knex('signed')
